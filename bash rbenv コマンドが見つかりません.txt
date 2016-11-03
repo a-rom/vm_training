@@ -1,0 +1,193 @@
+summer@FLH9Aai085 .rbenv]$ rbenv install -l
+bash: rbenv: コマンドが見つかりません
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$ where
+bash: where: コマンドが見つかりません
+[summer@FLH9Aai085 .rbenv]$ which
+Usage: /usr/bin/which [options] [--] COMMAND [...]
+Write the full path of COMMAND(s) to standard output.
+
+  --version, -[vV] Print version and exit successfully.
+  --help,          Print this help and exit successfully.
+  --skip-dot       Skip directories in PATH that start with a d              ot.
+  --skip-tilde     Skip directories in PATH that start with a t              ilde.
+  --show-dot       Don't expand a dot to current directory in o              utput.
+  --show-tilde     Output a tilde for HOME directory for non-ro              ot.
+  --tty-only       Stop processing options on the right if not               on tty.
+  --all, -a        Print all matches in PATH, not just the firs              t
+  --read-alias, -i Read list of aliases from stdin.
+  --skip-alias     Ignore option --read-alias; don't read stdin              .
+  --read-functions Read shell functions from stdin.
+  --skip-functions Ignore option --read-functions; don't read s              tdin.
+
+Recommended use is to write the output of (alias; declare -f) t              o standard
+input, so that which can show aliases and shell functions. See               which(1) for
+examples.
+
+If the options --read-alias and/or --read-functions are specifi              ed then the
+output can be a full alias or function definition, optionally f              ollowed by
+the full path of each command used inside of those.
+
+Report bugs to <which-bugs@gnu.org>.
+[summer@FLH9Aai085 .rbenv]$ which rbenv
+/usr/bin/which: no rbenv in (/usr/local/bin:/usr/bin:/usr/local              /sbin:/usr/sbin:/home/summer/.local/bin:/home/summer/bin:/home/              summer/.local/bin:/home/summer/bin:/home/summer/.local/bin:/hom              e/summer/bin)
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$ vi ~/.profile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+"~/.profile" 2L, 60C written
+
+/usr/bin/which: no rbenv in (/usr/local/bin:/usr/bin:/usr/local              /sbin:/usr/sbin:/home/summer/.local/bin:/home/summer/bin:/home/              summer/.local/bin:/home/summer/bin:/home/summer/.local/bin:/hom              e/summer/bin)
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$ vi ~/.profile
+[summer@FLH9Aai085 .rbenv]$ vi ~/.profile
+
+
+
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+~
+~
+~
+~
+~
+~
+                                                                             /sbin:/usr/sbin:/home/summer/.local/bin:/home/summer/bin:/home/              summer/.local/bin:/home/summer/bin:/home/summer/.local/bin:/hom              e/summer/bin)
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$ more ~/.profile
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+[summer@FLH9Aai085 .rbenv]$ vi ~/.profile
+[summer@FLH9Aai085 .rbenv]$ vi ~/.profile
+[summer@FLH9Aai085 .rbenv]$ echo $SHELL
+/bin/bash
+[summer@FLH9Aai085 .rbenv]$ source ~/.profile
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$
+[summer@FLH9Aai085 .rbenv]$ rbenv
+rbenv 1.0.0-33-gc7dcaf1
+Usage: rbenv <command> [<args>]
+
+Some useful rbenv commands are:
+   commands    List all available rbenv commands
+   local       Set or show the local application-specific Ruby               version
+   global      Set or show the global Ruby version
+   shell       Set or show the shell-specific Ruby version
+   install     Install a Ruby version using ruby-build
+   uninstall   Uninstall a specific Ruby version
+   rehash      Rehash rbenv shims (run this after installing ex              ecutables)
+   version     Show the current Ruby version and its origin
+   versions    List all Ruby versions available to rbenv
+   which       Display the full path to an executable
+   whence      List all Ruby versions that contain the given ex              ecutable
+
+See `rbenv help <command>' for information on a specific comman              d.
+For full documentation, see: https://github.com/rbenv/rbenv#rea              dme
+[summer@FLH9Aai085 .rbenv]$ echo $PATH
+/home/summer/.rbenv/shims:/home/summer/.rbenv/bin:/usr/local/bi              n:/usr/bin:/usr/local/sbin:/usr/sbin:/home/summer/.local/bin:/h              ome/summer/bin:/home/summer/.local/bin:/home/summer/bin:/home/s              ummer/.local/bin:/home/summer/bin
+[summer@FLH9Aai085 .rbenv]$ rbenv
+rbenv 1.0.0-33-gc7dcaf1
+Usage: rbenv <command> [<args>]
+
+Some useful rbenv commands are:
+   commands    List all available rbenv commands
+   local       Set or show the local application-specific Ruby               version
+   global      Set or show the global Ruby version
+   shell       Set or show the shell-specific Ruby version
+   install     Install a Ruby version using ruby-build
+   uninstall   Uninstall a specific Ruby version
+   rehash      Rehash rbenv shims (run this after installing ex              ecutables)
+   version     Show the current Ruby version and its origin
+   versions    List all Ruby versions available to rbenv
+   which       Display the full path to an executable
+   whence      List all Ruby versions that contain the given ex              ecutable
+
+See `rbenv help <command>' for information on a specific comman              d.
+For full documentation, see: https://github.com/rbenv/rbenv#rea              dme
+[summer@FLH9Aai085 .rbenv]$
