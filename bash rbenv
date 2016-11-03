@@ -1,8 +1,8 @@
 summer@FLH9Aai085 .rbenv]$ rbenv install -l
-bash: rbenv: コマンドが見つかりません
+bash: rbenv: 繧ｳ繝槭Φ繝峨′隕九▽縺九ｊ縺ｾ縺帙ｓ
 [summer@FLH9Aai085 .rbenv]$
 [summer@FLH9Aai085 .rbenv]$ where
-bash: where: コマンドが見つかりません
+bash: where: 繧ｳ繝槭Φ繝峨′隕九▽縺九ｊ縺ｾ縺帙ｓ
 [summer@FLH9Aai085 .rbenv]$ which
 Usage: /usr/bin/which [options] [--] COMMAND [...]
 Write the full path of COMMAND(s) to standard output.
