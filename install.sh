@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #centos7のインストール			
+#使い方　rootユーザで、./install.sh 引数1
+#引数1 はvm名を指定
 
 virt-install \
 --name=$1 \
