@@ -1,1 +1,10 @@
-<p>helloworld</p>
+<h2>VM一覧</h2>
+<table>
+<% @records.each do |record| %>
+<tr>
+  <td><%= record.vmname %></td>
+  <td><%= record.cpu %></td>
+  <td><%= record.status %></td>
+</tr>
+<% end %>
+</table>
