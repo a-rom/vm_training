@@ -1,0 +1,31 @@
+#!/bin/bash
+case "$1" in
+  create)            ##VMを作成                      
+    echo create vm $2 ...
+    virt-install \
+    --name $2 \
+    --ram 1000 \
+    --file /var/lib/libvirt/images/$2.img \
+    --file-size 8 \
+    --location=/tmp/CentOS-7-x86_64-Minimal-1511.iso &
+    echo Create vm $2 successful!!!Please create vmnode by nodecreate after this!!!
+    ;;
+  start)            ##VMを起動
+    echo start vm $2 ...
+    virsh start $2 &>/dev/null
+    echo Start vm $2 successful!!!
+    ;;
+  view)            ##VMを見る
+    echo view vm $2 ...
+    virt-viewer $2 &>/dev/null
+    echo View vm $2 successful!!!
+    ;;
+  stop)            ##VMをストップ/停止
+    echo stop vm $2 ...
+    virsh destroy $2 &>/dev/null
+    echo vm $2 is stopped!!!
+    ;;     
+    
+  *)                ##その他、エラー情報の出力
+    echo "ERROR:please input create|nodecreate|start|view|stop|reset after vm-ctl"
+esac
