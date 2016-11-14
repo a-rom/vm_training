@@ -1,0 +1,5 @@
+   <h2>仮想マシンの再起動</h2>
+    <%= form_tag('/rebooting_vm', :method => :post) do %>
+      <input placeholder="name" type="string" name="vmname">
+      <input type="submit" value="SENT">
+    <% end %>

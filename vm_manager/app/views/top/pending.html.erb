@@ -1,0 +1,5 @@
+   <h2>仮想マシンの一時停止	</h2>
+    <%= form_tag('/pending_vm', :method => :post) do %>
+      <input placeholder="name" type="string" name="vmname">
+      <input type="submit" value="SENT">
+    <% end %>
