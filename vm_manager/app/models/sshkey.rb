@@ -1,0 +1,2 @@
+class Sshkey < ApplicationRecord
+end

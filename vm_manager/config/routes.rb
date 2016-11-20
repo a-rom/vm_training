@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/' => 'top#index'
   get '/create' => 'top#create'
@@ -13,5 +14,7 @@ Rails.application.routes.draw do
   post '/destroy_vm' => 'top#destroy_vm'
   get '/starting' => 'top#starting'
   post '/starting_vm' => 'top#starting_vm'
+  get '/sshkey' => 'top#sshkey'
+  post '/create_sshkey' => 'top#create_sshkey'
 
 end
