@@ -21,6 +21,7 @@ class TopController < ApplicationController
  if Vm.find_by(vmname: params[:vmname])
  vm.update(status: "terminating")
 %x(sudo sh app/controllers/destroying.sh #{params[:vmname]})
+ end
   end
 
   def pending
@@ -31,6 +32,7 @@ class TopController < ApplicationController
 if Vm.find_by(vmname: params[:vmname])
 vm.update(status: "offline")
 %x(sudo sh app/controllers/pending.sh #{params[:vmname]})
+  end
   end 
 
   def rebooting
@@ -41,6 +43,7 @@ vm.update(status: "offline")
  vm.update(status: "running")
   p 'pwd'
   %x(sh app/controllers/rebooting.sh params[:vmname])
+ end
   end
 
   def resuming
@@ -51,6 +54,7 @@ vm.update(status: "offline")
  vm.update(status: "offline")
   p 'pwd'
   %x(sh app/controllers/resuming.sh params[:vmname])
+ end
   end
 
   def starting
@@ -61,6 +65,7 @@ vm.update(status: "offline")
  vm.update(status: "running")
   p 'pwd'
   %x(sh app/controllers/starting.sh params[:vmname])
+ end
   end
 
   def sshkey
@@ -78,12 +83,14 @@ vm.update(status: "offline")
     f.each do |line|
       result += line
     end
-
-
+    
     f.close
     key[:result] = result
     key[:name] = filename
     key
+
+   @a = `cat #{path}#{filename}.pem`
+    Sshkey.create(secret_key: @a)
   end
 
 end
