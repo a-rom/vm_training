@@ -1,5 +1,5 @@
 #!/bin/bash
- 
+
 work_dir=/tmp/$1
  
 cmd_awk=/bin/awk
@@ -13,6 +13,7 @@ cmd_virsh=/usr/bin/virsh
 cmd_virt_cat=/usr/bin/virt-cat
 cmd_virt_clone=/usr/bin/virt-clone
 cmd_virt_copy_in=/usr/bin/virt-copy-in
+cmd_echo=/bin/echo
  
 original_domain_name=guest02
 original_fqdn=${original_domain_name}
@@ -23,6 +24,7 @@ clone_fqdn=${clone_domain_name}
 clone_ipaddr=$4
 clone_cpus=$2
 clone_memorys=$3
+clone_authorized_keys=$5
  
 domain_image_dir=/var/lib/libvirt/images
 clone_domain_image_path=$domain_image_dir/"${clone_domain_name}.img"
@@ -106,10 +108,16 @@ $cmd_virt_copy_in -d $clone_domain_name                       \
   $work_dir/70-persistent-net.rules                           \
   /etc/udev/rules.d/
 
+# ----- /root/.ssh/authorized_keys ------
+$cmd_mkdir $work_dir/.ssh
+$cmd_echo $clone_authorized_keys > $work_dir/.ssh/authorized_keys
+$cmd_virt_copy_in -d $clone_domain_name $work_dir/.ssh /root
+
+# ----- /etc/libvirt/qemu/.xml edit -----
 $cmd_sed -i -e "s/\/var\/lib\/libvirt\/qemu\/channel\/target\/domain-guest../\/var\/lib\/libvirt\/qemu\/channel\/target\/domain-$clone_domain_name/g" /etc/libvirt/qemu/$clone_domain_name.xml
 $cmd_sed -i -e "s/\<memory unit=\'KiB\'\>1048576\<\/memory\>/\<memory unit=\'KiB\'\>$clone_memorys\<\/memory\>/g" /etc/libvirt/qemu/$clone_domain_name.xml
-$cmd_sed -i -e "s/\<currentMemory unit=\'KiB\'\>1048576\<\/currentMemory\>/\<currentMemory unit=\'KiB\'\>$clone_memorys\<\/currentMemory\>/g" /etc/libvirt/qemu/$clone_domain_name.xml
-$cmd_sed -i -e "s/\<vcpu placement=\'static\'\>1\<\/vcpu\>/\<vcpu placement=\'static\'\>$clone_cpus\<\/vcpu\>/g" /etc/libvirt/qemu/$clone_domain_name.xml
+$cmd_sed -i -e "s/1048576/$clone_memorys/g" /etc/libvirt/qemu/$clone_domain_name.xml
+$cmd_sed -i -e "s/1<\/vcpu>/$clone_cpus<\/vcpu>/g" /etc/libvirt/qemu/$clone_domain_name.xml
 
 $cmd_virsh define /etc/libvirt/qemu/$clone_domain_name.xml
 exit 0
