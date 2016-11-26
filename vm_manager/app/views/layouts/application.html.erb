@@ -9,6 +9,28 @@
   </head>
 
   <body>
-    <%= yield %>
+<header>
+<% if user_signed_in? %>
+<li class="login"><%= current_user.email %>としてログイン中です。</li>
+<% end %>
+<ul class="nav navbar-nav">
+<li><a href="/sshkey">鍵新規作成</a></li>
+<li><a href="/create">VM新規作成</a></li>
+<li><a href="/starting">VM起動</a></li>
+<li><a href="/destroy">VM停止</a></li>
+<li><a href="/delete">VM削除</a></li>
+<% if user_signed_in? %>
+<li><%= link_to "ログアウト", destroy_user_session_path, :method => :delete %></li>
+<% else %>
+<li><%= link_to "ログイン", new_user_session_path, :class => 'post' %></li>
+<% end %>
+</ul>
+</nav>
+</header>
+  <%= yield %>
   </body>
 </html>
+
+
+
+

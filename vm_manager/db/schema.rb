@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161120183350) do
+ActiveRecord::Schema.define(version: 20161123094931) do
 
   create_table "ip_pools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "ip"
     t.integer  "use_vm_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint   "ip",                      unsigned: true
   end
 
   create_table "sshkeys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20161120183350) do
     t.string   "public_key"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "use_vm_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -47,11 +48,11 @@ ActiveRecord::Schema.define(version: 20161120183350) do
   create_table "vms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "vmname"
     t.integer  "cpu"
-    t.string   "image"
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "ram"
+    t.integer  "user_id"
   end
 
 end

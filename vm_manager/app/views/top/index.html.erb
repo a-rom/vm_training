@@ -1,9 +1,16 @@
 <h2>VM一覧</h2>
-<table>
+<table border="5" bordercolor="navy">
+<tr>
+  <td>vmname</td>
+  <td>cpu</td>
+  <td>ram</td>
+  <td>status</td>
+</tr>
 <% @records.each do |record| %>
 <tr>
   <td><%= record.vmname %></td>
   <td><%= record.cpu %></td>
+  <td><%= record.ram %></td>
   <td><%= record.status %></td>
 </tr>
 <% end %>
