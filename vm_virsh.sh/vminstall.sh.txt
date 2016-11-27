@@ -1,0 +1,16 @@
+﻿#!/bin/bash
+##调用方法 ./vminstall.sh gstos4
+
+virt-install \
+--name=$1 \
+--vcpus=1 \
+--ram=1024 \
+--location=/tmp//CentOS-6.7-x86_64-bin-DVD1.iso  \
+--disk path=/home/kvm/images/$1.img,format=qcow2,size=8 \
+--network bridge=virbr0 \
+--arch=x86_64 \
+--os-type=linux \
+--os-variant=rhel6 \
+--graphics=none \
+--extra-args='console=tty0 console=ttyS0,115200n8'
+
