@@ -1,6 +1,6 @@
 class TopController < ApplicationController
 
-#before_filter :authenticate_user!
+before_filter :authenticate_user!
 
   def index
   @records = Vm.where(user_id:current_user.id).all
@@ -75,7 +75,7 @@ Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "i
     key[:name] = filename
     key
 
-   @a = `echo`cat #{path}#{filename}.pem``
-    Sshkey.create(secret_key: @a)
+   @a = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
+  Sshkey.create(email:current_user.email,secret_key: @a)
   end
 end
