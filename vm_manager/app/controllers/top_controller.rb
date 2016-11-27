@@ -12,16 +12,14 @@ before_filter :authenticate_user!
   def create_vm
 #id1から順に検索して、nameがNULLのレコードが見つかり且つid1から5までのcpuカラムと新しく入力されるcpuの値を足し合わせて、物理サーバーの上限cpuを超えない場合
 Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "initialize",user_id:current_user.id)
-#ip_record = IpPool.where(use_vm_id:nil).first
-#newest_vm_id = Vm.order("id desc").first.id
-#ip_record.use_vm_id = newest_vm_id
-#ip_record.save
-#secret_key_record = Sshkey.where(email:current_user.email,use_vm_id:nil).first
-#secret_key_record.use_vm_id = newest_vm_id
-#secret_key_record.save
-#%x(sudo sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/initializing.sh tanakatanaka 10 10 10.100.10.10)
-%x(sudo sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} 1 1 192.168.1.104)
-#%x(sudo sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip})
+ip_record = IpPool.where(use_vm_id:nil).first
+newest_vm_id = Vm.order("id desc").first.id
+ip_record.use_vm_id = newest_vm_id
+ip_record.save
+secret_key_record = Sshkey.where(email:current_user.email,use_vm_id:nil).first
+secret_key_record.use_vm_id = newest_vm_id
+secret_key_record.save
+%x(sudo sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.secret_key})
   redirect_to action: 'index'
   end
 
@@ -35,7 +33,7 @@ Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "i
  destroy_vm.status ="terminating"
  destroy_vm.save
  redirect_to action: 'index'
-#%x(sudo sh app/controllers/destroying.sh #{params[:vmname]})
+#%x(sudo sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/destroying.sh #{params[:vmname]})
  end
 
   end
@@ -50,7 +48,7 @@ Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "i
  starting_vm.save
  redirect_to action: 'index'
  # p 'pwd'
- # %x(sh app/controllers/starting.sh params[:vmname])
+ # %x(sh /home/a-tanaka/top/vm_training/vm_manager/app/controllers/starting.sh params[:vmname])
  end
   end
 
@@ -75,7 +73,7 @@ Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "i
     key[:name] = filename
     key
 
-   @a = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
-  Sshkey.create(email:current_user.email,secret_key: @a)
+   secret_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
+  Sshkey.create(email:current_user.email,secret_key: secret_key_content)
   end
 end
