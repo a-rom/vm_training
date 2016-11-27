@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post '/starting_vm' => 'top#starting_vm'
   get '/sshkey' => 'top#sshkey'
   post '/create_sshkey' => 'top#sshkey'
-  get '/delete' => 'top#detele'
+  get '/delete' => 'top#delete'
   post '/delete_vm' => 'top#delete_vm'
 
 end
