@@ -19,7 +19,7 @@ ip_record.save
 secret_key_record = Sshkey.where(email:current_user.email,use_vm_id:nil).first
 secret_key_record.use_vm_id = newest_vm_id
 secret_key_record.save
-%x(sudo sh /root/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.secret_key})
+%x(sh /root/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.secret_key})
   redirect_to action: 'index'
   end
 
@@ -33,7 +33,7 @@ secret_key_record.save
  destroy_vm.status ="terminating"
  destroy_vm.save
  redirect_to action: 'index'
-#%x(sudo sh /root/vm_training/vm_manager/app/controllers/destroying.sh #{params[:vmname]})
+ %x(sh /root/vm_training/vm_manager/app/controllers/destroying.sh #{params[:vmname]})
  end
 
   end
@@ -48,9 +48,24 @@ secret_key_record.save
  starting_vm.save
  redirect_to action: 'index'
  # p 'pwd'
- # %x(sh /root/vm_training/vm_manager/app/controllers/starting.sh params[:vmname])
+ %x(sh /root/vm_training/vm_manager/app/controllers/starting.sh params[:vmname])
  end
   end
+
+  def delete
+  end
+
+  def delete_vm
+ if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
+ starting_vm = Vm.find_by(vmname: params[:vmname])
+ starting_vm.destroy
+ redirect_to action: 'index'
+ # p 'pwd'
+ %x(sh /root/vm_training/vm_manager/app/controllers/deleting.sh params[:vmname])
+ end
+  end
+
+
 
   def sshkey
   end
