@@ -14,6 +14,7 @@ cmd_virt_cat=/usr/bin/virt-cat
 cmd_virt_clone=/usr/bin/virt-clone
 cmd_virt_copy_in=/usr/bin/virt-copy-in
 cmd_echo=/bin/echo
+cmd_printf=/bin/printf
  
 original_domain_name=guest02
 original_fqdn=${original_domain_name}
@@ -110,7 +111,7 @@ $cmd_virt_copy_in -d $clone_domain_name                       \
 
 # ----- /root/.ssh/authorized_keys ------
 $cmd_mkdir $work_dir/.ssh
-$cmd_echo $clone_authorized_keys > $work_dir/.ssh/authorized_keys
+$cmd_echo "$clone_authorized_keys" > $work_dir/.ssh/authorized_keys
 $cmd_virt_copy_in -d $clone_domain_name $work_dir/.ssh /root
 
 # ----- /etc/libvirt/qemu/.xml edit -----
