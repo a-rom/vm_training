@@ -88,7 +88,6 @@ end
     key
 
    secret_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
-   binding.pry
   Sshkey.create(email:current_user.email,secret_key: secret_key_content)
   end
 end
