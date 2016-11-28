@@ -1,0 +1,18 @@
+﻿#!/bin/bash
+
+#$1=new volume name,example: node3
+#$2=volume size,example:15G
+#$3=old machine name,example:gstos3
+
+echo method is ./extend.sh new size old
+
+virsh vol-create-as --pool StoragePool --name $1.img --capacity $2 --allocation 1G --format qcow2
+
+virt-resize --expand /dev/vda2 /home/kvm/images/$3.img /home/kvm/images/$1.img
+
+mv /home/kvm/images/$1.img /home/kvm/images/$3.img
+
+virsh vol-info /home/kvm/images/$3.img
+
+
+
