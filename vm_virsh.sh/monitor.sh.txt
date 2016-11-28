@@ -1,0 +1,24 @@
+﻿#!/bin/bash
+#やり方：./monitor.sh gstos3
+while true;do
+clear;
+
+#top info
+top -bn1 > /tmp/kvm_top.txt;
+
+#print PID&vm name
+ps aux|grep -v 'grep'|grep -v 'vhost-'|grep 'qemu-kvm'|awk '{print $2" "$13}'> /tmp/kvm_list.txt
+
+#top cmd 7行
+cat /tmp/kvm_top.txt|head -n 7;
+
+#name and monitor info
+for i in `cat /tmp/kvm_list.txt|awk '{print $1}'`;do
+    grep $i /tmp/kvm_list.txt|awk '{print $2}';
+    grep $i /tmp/kvm_top.txt|grep -v 'vhost-';
+done;
+
+#after input info,sleep 7s
+sleep 7
+done;
+
