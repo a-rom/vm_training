@@ -59,8 +59,7 @@ if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
  delete_vm = Vm.find_by(vmname: params[:vmname])
  delete_vm_id = delete_vm.id
  ip_record = IpPool.find_by(use_vm_id:delete_vm_id)
-binding.pry
-ip_record.use_vm_id = 'nil'
+ip_record.use_vm_id = 0
 ip_record.save
  delete_vm.destroy
  redirect_to action: 'index'
