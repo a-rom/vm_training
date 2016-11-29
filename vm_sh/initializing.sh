@@ -34,8 +34,8 @@ clone_domain_image_path=$domain_image_dir/"${clone_domain_name}.img"
 # pre process.
 # --------------------------------------------------
  
-if [ "$clone_domain_name" = "" -o "$clone_cpus" = "" -o "clone_memorys" = "" -o "$clone_ipaddr" = "" ] ; then
-echo "Usage initializing.sh <domain_name> <cpus> <memorys> <ipaddr>"
+if [ "$clone_domain_name" = "" -o "$clone_cpus" = "" -o "clone_memorys" = "" -o "$clone_ipaddr" = "" -o "$clone_authorized_key" = "\"\"" ] ; then
+echo "Usage initializing.sh <domain_name> <cpus> <memorys> <ipaddr> <authorized_keys>"
 exit 0
 fi
  
