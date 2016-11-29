@@ -17,7 +17,6 @@ newest_vm_id = Vm.order("id desc").first.id
 ip_record.use_vm_id = newest_vm_id
 ip_record.save
 secret_key_record = Sshkey.where(email:current_user.email,use_vm_id:nil).first
-binding.pry
 secret_key_record.use_vm_id = newest_vm_id
 secret_key_record.save
 %x(sh /root/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.secret_key})
@@ -57,8 +56,13 @@ secret_key_record.save
 
   def delete_vm
 if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
- starting_vm = Vm.find_by(vmname: params[:vmname])
- starting_vm.destroy
+ delete_vm = Vm.find_by(vmname: params[:vmname])
+ delete_vm_id = delete_vm.id
+ ip_record = IpPool.find_by(use_vm_id:delete_vm_id)
+binding.pry
+ip_record.use_vm_id = 'nil'
+ip_record.save
+ delete_vm.destroy
  redirect_to action: 'index'
  %x(sh /root/vm_training/vm_manager/app/controllers/deleting.sh #{params[:vmname]})
 end
@@ -71,7 +75,7 @@ end
 
   def create_sshkey
     key = {}
-    filename = 'testfile' + Time.now.to_i.to_s
+    filename = 'earlycloud' + Time.now.to_i.to_s
     path = '/tmp/'
     cmd = "ssh-keygen -q -t rsa -N '' -f '#{path}#{filename}' >/dev/null && openssl rsa -in #{path}#{filename} -outform pem > #{path}#{filename}.pem "
 
