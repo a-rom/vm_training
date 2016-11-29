@@ -89,6 +89,6 @@ secret_key_record.save
     key
 
    secret_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
-  Sshkey.create(email:current_user.email,secret_key: secret_key_content)
+  Sshkey.create(email: current_user.email,secret_key: secret_key_content)
   end
 end
