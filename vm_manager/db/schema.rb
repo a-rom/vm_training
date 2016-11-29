@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161127093224) do
+ActiveRecord::Schema.define(version: 20161129151029) do
 
   create_table "ip_pools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "use_vm_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "use_vm_id",  default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "ip"
   end
 
   create_table "sshkeys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.text     "secret_key", limit: 65535
-    t.string   "public_key"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "use_vm_id"
+    t.text     "public_key", limit: 65535
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "use_vm_id",                default: 0, null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(version: 20161127093224) do
 
   create_table "vms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "vmname"
-    t.integer  "cpu"
+    t.integer  "cpu",        null: false
     t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "ram"
-    t.integer  "user_id"
+    t.integer  "ram",        null: false
+    t.integer  "user_id",    null: false
   end
 
 end

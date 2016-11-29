@@ -1,0 +1,11 @@
+﻿#!/bin/bash  
+##やり方　./vmdelete.sh gstos4
+  
+source ../vmdelete.sh
+  
+virsh destroy $1  
+virsh undefine $1  
+  
+rm -f /home/kvm/images/$1.img
+rm -f /etc/libvirt/qemu/$1.xml
+echo -e "KVM host list is:\n `virsh list --all`"

@@ -1,0 +1,40 @@
+﻿#!/bin/bash
+#方法　./virsh.sh start|shutdown|destroy|restart|create|define|undefine|list gstos3
+case $1 in
+start)
+virsh start $2
+echo starting...
+echo successful
+;;
+shutdown)
+echo shutdowning...
+virsh shutdown $2
+echo successful
+;;
+destroy)
+virsh destroy $2
+echo successful
+;;
+restart)
+virsh destroy $2
+virsh start $2
+echo successful
+;;
+create)
+virsh create $2
+echo successful
+;;
+define)
+virsh define $2
+echo successful
+;;
+undefine)
+virsh undefine $2
+echo successful
+;;
+list)
+virsh list --all
+;;
+*)
+echo input error
+esac
