@@ -1,18 +1,20 @@
 ﻿#!/bin/bash
 #やり方：./monitor.sh
+#起動中の仮装マシンを監視するため
+#作成者：夏立娜
 while true;do
 clear;
 
-#top info
+#リアルタイムのtop 情報
 top -bn1 > /tmp/kvm_top.txt;
 
-#print PID&vm name
+#PID&仮装マシン名をマッチして、指定のファイルへ出力する。
 ps aux|grep -v 'grep'|grep -v 'vhost-'|grep 'qemu-kvm'|awk '{print $2" "$13}'> /tmp/kvm_list.txt
 
-#top cmd 7行
+#7行のTOP情報を取る
 cat /tmp/kvm_top.txt|head -n 7;
 
-#name and monitor info
+#仮装マシン名とmonitor infoをマッチ
 for i in `cat /tmp/kvm_list.txt|awk '{print $1}'`;do
     grep $i /tmp/kvm_list.txt|awk '{print $2}';
     grep $i /tmp/kvm_top.txt|grep -v 'vhost-';
