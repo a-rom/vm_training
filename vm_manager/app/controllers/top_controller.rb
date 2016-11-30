@@ -10,21 +10,21 @@ before_filter :authenticate_user!
   end
 
   def create_vm
-#id1から順に検索して、nameがNULLのレコードが見つかり且つid1から5までのcpuカラムと新しく入力されるcpuの値を足し合わせて、物理サーバーの上限cpuを超えない場合
+#vmnameと同内容がVmテーブルのuser_idカラムに存在する場合
 if !Vm.exists?(vmname: params[:vmname],user_id:current_user.id)
-  
+#物理サーバーのCPUの上限に到達している場合
   if MAX_CPU < Vm.sum(:cpu)+ params[:cpu].to_i
    flash.now[:danger] = 'CPUの空きがありません' 
    render 'create'
-
+#物理サーバーのRAMの上限に到達している場合
  elsif MAX_RAM < Vm.sum(:ram) + params[:ram].to_i
    flash.now[:danger] = 'RAMの空きがありません' 
    render 'create'
-
+#未使用のSSH鍵がない場合
   elsif !Sshkey.exists?(email:current_user.email,use_vm_id:0)
    flash.now[:danger] = '未使用のSsh用の鍵がありません' 
    render 'create'
-
+#未使用のIPアドレスがない場合
   elsif !IpPool.exists?(use_vm_id:0)
    flash.now[:danger] = 'IPアドレスの空きがありません' 
    render 'create'
@@ -55,7 +55,7 @@ end
   end
 
   def destroy_vm
-#vmnameとparams[:vmname]}が同じ値だった場合に実行
+##vmnameと同内容がVmテーブルのuser_idカラムに存在する場合
  if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
  destroy_vm = Vm.find_by(vmname: params[:vmname])
  destroy_vm.status ="terminating"
@@ -76,6 +76,7 @@ end
   end
 
   def starting_vm
+##vmnameと同内容がVmテーブルのuser_idカラムに存在する場合
  if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
  starting_vm = Vm.find_by(vmname: params[:vmname])
  starting_vm.status ="starting"
@@ -95,6 +96,7 @@ end
   end
 
   def delete_vm
+##vmnameと同内容がVmテーブルのuser_idカラムに存在する場合
 if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
  delete_vm = Vm.find_by(vmname: params[:vmname])
  delete_vm_id = delete_vm.id
@@ -123,6 +125,7 @@ end
   end
 
   def create_sshkey
+#鍵を生成する
     key = {}
     filename = 'earlycloud' + Time.now.to_i.to_s
     path = '/tmp/'
@@ -140,6 +143,7 @@ end
     key[:name] = filename
     key
 
+#公開鍵の中身を出力して、DBに格納する
    public_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pub`
   Sshkey.create(email: current_user.email,public_key: public_key_content)
   flash[:success] = '鍵を作成しました'
