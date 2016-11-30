@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129151029) do
+ActiveRecord::Schema.define(version: 20161129163946) do
 
   create_table "ip_pools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "use_vm_id",  default: 0, null: false
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20161129151029) do
 
   create_table "sshkeys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
-    t.text     "secret_key", limit: 65535
     t.text     "public_key", limit: 65535
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false

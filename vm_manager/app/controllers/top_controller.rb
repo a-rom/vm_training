@@ -11,6 +11,25 @@ before_filter :authenticate_user!
 
   def create_vm
 #id1から順に検索して、nameがNULLのレコードが見つかり且つid1から5までのcpuカラムと新しく入力されるcpuの値を足し合わせて、物理サーバーの上限cpuを超えない場合
+if !Vm.exists?(vmname: params[:vmname],user_id:current_user.id)
+  
+  if MAX_CPU < Vm.sum(:cpu)+ params[:cpu].to_i
+   flash.now[:danger] = 'CPUの空きがありません' 
+   render 'create'
+
+ elsif MAX_RAM < Vm.sum(:ram) + params[:ram].to_i
+   flash.now[:danger] = 'RAMの空きがありません' 
+   render 'create'
+
+  elsif !Sshkey.exists?(email:current_user.email,use_vm_id:0)
+   flash.now[:danger] = '未使用のSsh用の鍵がありません' 
+   render 'create'
+
+  elsif !IpPool.exists?(use_vm_id:0)
+   flash.now[:danger] = 'IPアドレスの空きがありません' 
+   render 'create'
+
+  else
 Vm.create(vmname: params[:vmname],cpu: params[:cpu],ram: params[:ram],status: "initialize",user_id:current_user.id)
 ip_record = IpPool.where(use_vm_id:0).first
 newest_vm_id = Vm.order("id desc").first.id
@@ -19,8 +38,17 @@ ip_record.save
 secret_key_record = Sshkey.where(email:current_user.email,use_vm_id:0).first
 secret_key_record.use_vm_id = newest_vm_id
 secret_key_record.save
-#{}%x(sh /root/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.secret_key})
+%x(sh /root/vm_training/vm_manager/app/controllers/initializing.sh #{params[:vmname]} #{params[:cpu]} #{params[:ram]} #{ip_record.ip} #{secret_key_record.public_key})
+  flash[:success] ='新しいVMを作る事ができました'
   redirect_to action: 'index'
+  end
+
+else
+   flash.now[:danger] = 'すでに同名のVMが存在します' 
+   render 'create'
+
+end
+
   end
 
   def destroy
@@ -32,11 +60,17 @@ secret_key_record.save
  destroy_vm = Vm.find_by(vmname: params[:vmname])
  destroy_vm.status ="terminating"
  destroy_vm.save
+ flash[:success] = 'VMを停止しました'
  redirect_to action: 'index'
  %x(sh /root/vm_training/vm_manager/app/controllers/destroying.sh #{params[:vmname]})
- end
+ 
 
-  end
+ else
+   flash.now[:danger] = 'VMを停止できませんでした'
+   render 'destroy'
+
+ end
+end
 
   def starting
   end
@@ -46,10 +80,16 @@ secret_key_record.save
  starting_vm = Vm.find_by(vmname: params[:vmname])
  starting_vm.status ="starting"
  starting_vm.save
- redirect_to action: 'index'
- %x(sh /root/vm_training/vm_manager/app/controllers/starting.sh  #{params[:vmname]})
+  %x(sh /root/vm_training/vm_manager/app/controllers/starting.sh  #{params[:vmname]})
+flash[:success] = 'VMを起動しました'
+redirect_to action: 'index'
+
+ else
+   flash.now[:danger] = 'VMを起動できませんでした'
+   render 'starting'
  end
-  end
+
+end
 
   def delete
   end
@@ -59,13 +99,23 @@ if Vm.find_by(vmname: params[:vmname],user_id:current_user.id)
  delete_vm = Vm.find_by(vmname: params[:vmname])
  delete_vm_id = delete_vm.id
  ip_record = IpPool.find_by(use_vm_id:delete_vm_id)
+ ssh_record = Sshkey.find_by(use_vm_id:delete_vm_id)
 ip_record.use_vm_id = 0
 ip_record.save
+ssh_record.use_vm_id = 0
+ssh_record.save
  delete_vm.destroy
+ flash[:success] = 'VMを削除しました'
  redirect_to action: 'index'
  %x(sh /root/vm_training/vm_manager/app/controllers/deleting.sh #{params[:vmname]})
-end
+
+
+ else
+   flash.now[:danger] = 'VMを削除できませんでした'
+   render 'delete'
  end
+
+end
 
 
 
@@ -90,7 +140,10 @@ end
     key[:name] = filename
     key
 
-   secret_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pem`
-  Sshkey.create(email: current_user.email,secret_key: secret_key_content)
+   public_key_content = `awk '{printf "%s",$0}' #{path}#{filename}.pub`
+  Sshkey.create(email: current_user.email,public_key: public_key_content)
+  flash[:success] = '鍵を作成しました'
+ redirect_to action: 'index'
+
   end
 end
