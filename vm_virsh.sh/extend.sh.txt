@@ -1,5 +1,8 @@
 ﻿#!/bin/bash
 
+#仮装マシンの容量を追加するためのスクリプト。
+#作成者：夏立娜
+
 #$1=new volume name,example: node3
 #$2=volume size,example:15G
 #$3=old machine name,example:gstos3
