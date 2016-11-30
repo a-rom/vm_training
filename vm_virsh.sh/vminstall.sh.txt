@@ -1,5 +1,5 @@
 ﻿#!/bin/bash
-##调用方法 ./vminstall.sh gstos4
+##使用方法 ./vminstall.sh gstos4
 
 virt-install \
 --name=$1 \
