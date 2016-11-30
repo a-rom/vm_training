@@ -1,5 +1,5 @@
 ﻿#!/bin/bash
-#やり方：./monitor.sh gstos3
+#やり方：./monitor.sh
 while true;do
 clear;
 
